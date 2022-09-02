@@ -1,0 +1,29 @@
+let mut throw = λ_. panic "No catch handler!"
+
+typedef try-block = λ(): any;
+typedef catch-block = λ(string): any;
+
+let try = I
+let catch = λ(try: try-block, catch: catch-block) call/cc λreturn.{
+    let rethrow = throw
+    throw = λ(v: string) {
+        throw = rethrow
+        return(catch v)
+    }
+    let result = try()
+    throw = rethrow
+    return result
+}
+
+; vvvv example vvvv
+
+let unsafe-division = λ(n, m)
+    if m == 0 then throw "Division by zero! (${n} / ${m})"
+    else n / m
+
+try(λ() {
+    let x = unsafe-division 10 0
+    echo x
+}).catch λerror. {
+    echo "An error occured :( ${error}"
+}

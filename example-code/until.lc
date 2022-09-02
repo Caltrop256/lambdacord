@@ -1,0 +1,8 @@
+let Y = λf.(λx.f(λv.x x v))(λx.f(λv.x x v))
+let until = λ(cond: λ, body: λ) Y λ(s, acc) {
+    let n = body acc;
+    if !(cond n) then s n
+    else n
+}
+
+until 128.0.less-than (B echo 2.0.mult) 0.'3;

@@ -1,0 +1,29 @@
+{
+    "name": "lambdacord",
+    "displayName": "LambdaCord Language Support",
+    "description": "Syntax Highlighting for LambdaCord",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "lambdacord",
+            "aliases": ["lambdacord", "LambdaCord"],
+            "extensions": [".lc", ".d"],
+            "configuration": "./language-configuration.json",
+            "icon": {
+                "dark": "icon.svg",
+                "light": "icon.svg"
+            }
+        }],
+        "grammars": [{
+            "language": "lambdacord",
+            "scopeName": "source.lc",
+            "path": "./syntaxes/lambdacord.tmLanguage.json"
+        }]
+    }
+}

@@ -1,0 +1,7 @@
+let inc = λx.x + 1
+let fizzbuzz = λx.(
+    ((3).divides? x * "Fizz") +
+    ((5).divides? x * "Buzz")
+) || x: string
+
+#100 -> inc -> fizzbuzz

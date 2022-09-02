@@ -1,0 +1,160 @@
+{
+	"scopeName": "source.lc",
+	"name": "lc",
+	"patterns": [
+		{"include": "#preprocesserDirective"},
+		{"include": "#topLevelExpression"}
+	],
+	"repository": {
+		"preprocesserDirective": {
+			"patterns": [
+				{
+					"name": "comment.lc",
+					"begin": ";>",
+					"end": "<;"
+				},
+				{
+					"name": "comment.line.lc",
+					"match": "(;).*",
+					"captures": {
+						"1": {"name": "keyword.operator.lc"}
+					}
+				},
+				{
+					"name": "keyword.control.lc",
+					"match": "\\$\\w+"
+				}
+			]
+
+		},
+		"topLevelExpression": {
+			"name": "expression.group.lc",
+			"patterns": [{"include": "#expression"}]
+		},
+
+
+		"expression": {
+			"name": "expression.group.lc",
+			"patterns": [
+				{"include": "#stringTemplate"},
+				{"include": "#numericLiteral"},
+				{"include": "#functionDefinition"},
+				{"include": "#typeAnnotation"},
+				{"include": "#keywords"},
+				{"include": "#identifier"},
+				{"include": "#operator"}
+			]
+		},
+
+		"functionDefinition": {
+			"name": "keyword.type.annotation.lc",
+			"match": "(fn|λ|\\\\)\\s*(?=\\(|[a-zA-Z_])"
+		},
+
+		"typeAnnotation": {
+			"patterns": [
+				{
+					"name": "support.type.annotation.lc",
+					"match": "\\\\"
+				},
+				{
+					"name": "support.type.annotation.lc",
+					"match": "\\b(typedef)\\s+[a-zA-Z_][a-zA-Z0-9_/?-]*\\s*(=)\\s*.+\\s*(;)",
+					"captures": {
+						"1": {"name": "keyword.type.annotation.lc"},
+						"2": {"name": "keyword.operator.lc"},
+						"3": {"name": "keyword.operator.lc"}
+					}
+				},
+				{
+					"match": "\\b(struct)\\s+([a-zA-Z_][a-zA-Z0-9_/?-]*)",
+					"captures": {
+						"1": {"name": "keyword.type.annotation.lc"},
+						"2": {"name": "support.type.annotation.lc"}
+					}
+				},
+				{
+					"begin": "\\b(enum)\\s+([a-zA-Z_][a-zA-Z0-9_/?-]*)\\s*\\{",
+					"beginCaptures": {
+						"1": {"name": "keyword.type.annotation.lc"},
+						"2": {"name": "support.type.annotation.lc"}
+					},
+					"end": "\\}",
+					"patterns": [{
+						"match": "([a-zA-Z_][a-zA-Z0-9_/?-]*)(?:\\((.*)\\))?,?",
+						"captures": {
+							"1": {"name": "keyword.type.annotation.lc"},
+							"2": {"name": "support.type.annotation.lc"}
+						}
+					}]
+				},
+				{
+					"name": "support.type.annotation.lc",
+					"match": "\\b(struct|enum|fn|λ)"
+				}, {
+					"name": "support.type.annotation.lc",
+					"match": "(?<=[^:]):\\s*[a-zA-Z_][a-zA-Z0-9_/?-]*"
+				}, {
+					"name": "support.type.annotation.lc",
+					"match": "(?<=[^:]):\\s*\\(.*\\)"
+				}, {
+					"name": "support.type.annotation.lc",
+					"match": "[a-zA-Z_][a-zA-Z0-9_/?-]*\\s*(?=\\{)"
+				}
+			]
+		},
+
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.lc",
+					"match": "\\b(if|then|else|match|import|export)\\b"
+				}, {
+					"name": "keyword.type.annotation.lc",
+					"match": "\\b(true|false|let|mut)\\b"
+				}
+			]
+		},
+
+		"identifier": {
+			"patterns": [
+				{
+					"name": "variable.name.lc",
+					"match": "[a-zA-Z_][a-zA-Z0-9_/?-]*\\s*(?=[+/*^~|&%√∛∜#!<>=.,:;⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺√∛∜)\\]}]|$|then|else|\\s+\\?)"
+				}, {
+					"name": "entity.name.function.lc",
+					"match": "[a-zA-Z_][a-zA-Z0-9_/?-]*"
+				}
+			]
+		},
+
+		"numericLiteral": {
+			"name": "constant.numeric.lc",
+			"match": "[0-9][0-9_-]*(\\.([0-9][0-9_-])?('[0-9][0-9_-]|\\([0-9][0-9_-]\\))?)?|0b[01][01_-]*|0o[0-7][0-7_-]*|0x[0-9A-Fa-f][0-9A-Fa-f_-]*"
+		},
+
+		"stringTemplate": {
+			"name": "string.quoted.double.lc",
+			"begin": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lc",
+					"match": "\\\\."
+				}, {
+					"name": "expression.group.lc",
+					"begin": "(\\$\\{)",
+					"end": "(\\})",
+					"beginCaptures": {"1": {"name": "constant.character.escape.lc"}},
+					"endCaptures": {"1": {"name": "constant.character.escape.lc"}},
+					"patterns": [{"include": "#expression"}]
+				}
+			],
+			"end": "\""
+		},
+
+		"operator": {
+			"name": "keyword.operator.lc",
+			"match": "[-+/*^~|&%√∛∜#!?<>=.,:;⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺√∛∜]|::"
+		}
+	}
+}

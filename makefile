@@ -1,0 +1,2 @@
+compile :
+	@npx tsc

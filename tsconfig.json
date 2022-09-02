@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                      
+    "lib": ["ESNext"],                       
+    "module": "esnext",                    
+    "rootDir": "src",
+    "outDir": "build",       
+    
+    "allowJs": false,                        
+
+    "forceConsistentCasingInFileNames": true,
+
+    "strict": true,                          
+    "noImplicitAny": true,                   
+ 
+    "skipLibCheck": true                     
+  }
+}
